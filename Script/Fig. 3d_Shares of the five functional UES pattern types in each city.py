@@ -1,11 +1,17 @@
+import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import os
 
-INPUT_FILE = r"C:\github\Data\data.csv"
-OUTPUT_DIR = r"C:\github\Data"
+INPUT_FILE = os.path.join(DATA_DIR, "data.csv")
+OUTPUT_DIR = DATA_DIR
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

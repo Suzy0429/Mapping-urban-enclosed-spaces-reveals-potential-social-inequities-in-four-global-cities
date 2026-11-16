@@ -1,8 +1,14 @@
+import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
 import pandas as pd
 import os
 
-INPUT_CSV = r"C:\github\Data\Test_sampling.csv"
-OUTPUT_CSV = r"C:\github\Data\Result_Confusion_Matrix_city.csv"
+INPUT_CSV = os.path.join(DATA_DIR, "Test_sampling.csv")
+OUTPUT_CSV = os.path.join(DATA_DIR, "Result_Confusion_Matrix_city.csv")
 
 
 def calculate_confusion(real, pred):

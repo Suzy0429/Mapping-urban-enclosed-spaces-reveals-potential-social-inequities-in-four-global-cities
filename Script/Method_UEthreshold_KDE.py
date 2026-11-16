@@ -1,3 +1,9 @@
+import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -22,7 +28,7 @@ plt.rc('legend', fontsize=10)
 
 # 1. Load and preprocess inference data
 try:
-    file_path = r"C:\github\Data\UEthreshold_inference.csv"
+    file_path = os.path.join(DATA_DIR, "UEthreshold_inference.csv")
     data = pd.read_csv(file_path)
     enclosure_data = data['a'][(data['a'] > 0) & (data['a'] < 1)].copy()
     print(f"Valid data count: {len(enclosure_data)}")
@@ -32,7 +38,7 @@ except Exception as e:
 
 # 2. Calculate optimal threshold
 try:
-    train_df = pd.read_csv(r"C:\github\Data\UEthreshold_train.csv")
+    train_df = pd.read_csv(os.path.join(DATA_DIR, "UEthreshold_train.csv"))
     a_values = train_df["FBW"].values
     y_values = train_df["ue"].values
 
@@ -110,7 +116,7 @@ plt.ylabel('Density', fontsize=12)
 plt.legend(loc='best', fontsize=10)
 plt.grid(True, linestyle='--', alpha=0.5)
 
-output_img = r"C:\github\Data\Result_UEthreshold.png"
+output_img = os.path.join(DATA_DIR, "Result_UEthreshold.png")
 plt.tight_layout()
 plt.savefig(output_img, dpi=300, bbox_inches='tight')
 print(f"\nAnalysis chart saved to: {output_img}")

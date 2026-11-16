@@ -1,3 +1,9 @@
+import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
 import pandas as pd
 import numpy as np
 import os
@@ -6,9 +12,9 @@ import matplotlib.ticker as ticker
 import matplotlib.patches as mpatches
 
 # 1. Global Configuration
-INPUT_DATA_FILE = r"C:\github\Data\data.csv"
-INTERMEDIATE_FILE = r"C:\github\Data\Result_rate.csv"
-OUTPUT_PLOT_FILE = r"C:\github\Data\Result_Fig.1c_share.png"
+INPUT_DATA_FILE = os.path.join(DATA_DIR, "data.csv")
+INTERMEDIATE_FILE = os.path.join(DATA_DIR, "Result_rate.csv")
+OUTPUT_PLOT_FILE = os.path.join(DATA_DIR, "Result_Fig.1c_share.png")
 
 plt.rcParams['font.family'] = 'Arial'
 plt.rcParams['axes.unicode_minus'] = False

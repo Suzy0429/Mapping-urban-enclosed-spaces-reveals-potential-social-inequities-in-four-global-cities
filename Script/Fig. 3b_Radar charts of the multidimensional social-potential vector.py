@@ -1,14 +1,20 @@
 import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 # Configuration
-csv_path = r"C:\github\Data\data.csv"
-out_path = r"C:\github\Data\Result_Fig.3b_radar.png"
+csv_path = os.path.join(DATA_DIR, "data.csv")
+out_path = os.path.join(DATA_DIR, "Result_Fig.3b_radar.png")
 cities = ["beijing", "london", "newyork", "mumbai"]
-metrics = ["green", "hp", "infra", "build", "cctv"]
+metrics = ["green", "hp", "infra", "build"]
 ues_color = "#B52C34"
 uos_color = "#1E4681"
 dpi = 300

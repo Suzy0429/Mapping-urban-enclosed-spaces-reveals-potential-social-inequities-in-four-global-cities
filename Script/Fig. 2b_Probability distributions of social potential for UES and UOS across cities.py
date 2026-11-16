@@ -1,3 +1,9 @@
+import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,8 +22,8 @@ CITY_NAMES = {
 }
 
 def plot_distribution_combined():
-    input_file = r"C:\github\Data\data.csv"
-    output_dir = r"C:\github\Data"
+    input_file = os.path.join(DATA_DIR, "data.csv")
+    output_dir = DATA_DIR
     output_file = os.path.join(output_dir, "Result_Fig.2b_distribution.png")
 
     if not os.path.exists(input_file):

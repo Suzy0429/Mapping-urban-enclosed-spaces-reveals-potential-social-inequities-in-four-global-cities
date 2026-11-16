@@ -11,3 +11,66 @@ File structures
 ---
 Data: Data tables and result figures/charts.
 Script: Mapping codes, methodology, and testing codes.
+Workflow: Documentation of the processing chain end to end.
+
+`Workflow/` documents the whole chain and redistributes the two stages of it that are specific to this study:
+
+| Step | Script | Produces |
+|---|---|---|
+| 1 | `Workflow/01_sampling_points.py` | sampling points and viewing angles along every parcel edge |
+| 2 | `Workflow/02_threshold_estimation.py` | the enclosure threshold T and its uncertainty |
+
+`Workflow/README.md` also documents the remaining stages — the functional classification, the connectivity components τ and κ, and the social potential Φ — with their parameters, software versions and random seeds, so that the whole chain can be followed. The code for those stages and the parcel-level identification results are not redistributed, and are available from the corresponding authors on reasonable request.
+
+The rest of the chain is not specific to this study and is cited rather than re-released: parcel construction follows the published OSM road-network workflow that the paper cites; street-view imagery is retrieved through the standard Baidu Maps and Google Street View endpoints described in Section 2.2; and semantic segmentation uses the published Mask2Former release (Cheng et al., 2022) with the Swin-L (IN21k) backbone from the Semantic Segmentation track of the Mapillary Vistas Model Zoo, available at <https://github.com/facebookresearch/mask2former>.
+
+Running it
+---
+Python 3.9 or later. Step 2 needs `numpy` and `pandas`; step 1 additionally needs ArcGIS Pro (arcpy). The versions used are listed in `Workflow/README.md`. Every script takes its inputs and its output directory as arguments:
+
+```bash
+python Workflow/02_threshold_estimation.py \
+    --train Data/UEthreshold_train.csv --out-dir out
+```
+
+The scripts under `Script/` resolve `Data/` from their own location, so the repository runs wherever it is cloned. They additionally need `matplotlib`, `seaborn` (Figures 3a and the threshold figure) and `openpyxl` (the fence-model confusion matrix).
+
+Where the paper's claims are computed
+---
+| Paper | Script |
+|---|---|
+| Section 2.2, sampling geometry | `Workflow/01_sampling_points.py` |
+| Section 2.3, identification rule `ue = (FBW >= T) & (road == 1)` | `Workflow/02_threshold_estimation.py` |
+| Section 2.3, threshold T = 0.735 and its identification interval | `Workflow/02_threshold_estimation.py` |
+| Supplementary Table 13, the bootstrap interval of T | `Workflow/02_threshold_estimation.py` |
+| Section 2.4, validation of the recognition | `Script/Method_Confusion Matrices and Performance Metrics for Fence Across Models.py`, `Script/Method_Comparison of confusion matrices and performance metrics across cities.py` |
+| Section 2.5, functional classification | on request |
+| Section 2.6, Eq. 2, interface permeability κ | on request |
+| Section 2.6, Eqs. 3–5, topological embeddedness τ | on request |
+| Section 2.6, Eq. 1, spatial connectivity C = τ · κ | on request |
+| Supplementary Table 10, entrance and exit weights | on request |
+| Section 3.1, UES size distribution and area shares | `Script/Fig. 1b_...py`, `Script/Fig. 1c_...py` |
+| Section 3.2, social potential Φ and its distribution | `Script/Fig. 2b_...py`, `Script/Fig. 3a_...py`, `Script/Fig. 3b_...py` |
+| Section 3.2, the four quadrants | `Script/Fig. 3c_...py`, `Script/Fig. 3d_...py` |
+
+Rows marked *on request* are documented with their parameters and seeds in `Workflow/README.md`; their code is available from the corresponding authors.
+
+Data
+---
+`Data/` holds the tables the scripts above read and the results they produce:
+
+| File | Contents |
+|---|---|
+| `data.csv` | the parcel table: identifier, city, functional type, enclosure label, area, the social-potential indicators, and the connectivity columns `gate` (κ), `CB` (τ) and `C` |
+| `UEthreshold_train.csv` | the 700 hand-labelled parcels used to fit T |
+| `Test_sampling.csv` | the validation parcels with the reference and mapped labels |
+| `UEthreshold_inference.csv` | the per-parcel closure degrees used for the threshold figure |
+| `Result_*.csv`, `Result_*.png` | the tables and figures behind the panels |
+
+In `data.csv`, κ (`gate`) and C are empty for open parcels. The paper defines C as the product of κ and τ for enclosed parcels only, an open parcel having no enclosure boundary for κ to describe; τ (`CB`) is reported for every parcel, since the internal road network exists either way. The four-quadrant analysis uses enclosed parcels throughout.
+
+Street-view imagery is not redistributed: it is retrieved from Baidu Maps and Google Street View under their terms of service, and the coordinates needed to retrieve it are produced by `Workflow/01_sampling_points.py`. The OpenStreetMap extracts, the land-use rasters and the housing-price datasets are listed with their sources, years, spatial units and processing steps in Supplementary Information Table 14.
+
+License
+---
+Apache License 2.0; see `LICENSE`.

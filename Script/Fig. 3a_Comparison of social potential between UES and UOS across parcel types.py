@@ -1,4 +1,10 @@
 import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
+import os
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -9,8 +15,8 @@ from matplotlib.patches import Patch
 from matplotlib import colors as mcolors
 
 # Configuration
-CSV_PATH = r"C:\github\Data\data.csv"
-OUT_DIR = r"C:\github\Data"
+CSV_PATH = os.path.join(DATA_DIR, "data.csv")
+OUT_DIR = DATA_DIR
 DPI = 300
 FIGSIZE = (15, 10)
 FONT_SIZE = 24

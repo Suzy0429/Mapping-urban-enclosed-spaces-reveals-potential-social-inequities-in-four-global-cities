@@ -1,3 +1,9 @@
+import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import powerlaw
@@ -7,8 +13,8 @@ import matplotlib.colors as mcolors
 from matplotlib.offsetbox import AnchoredOffsetbox, TextArea, HPacker, VPacker
 
 # Configuration and paths
-file_path = r"C:\github\Data\data.csv"
-output_dir = r"C:\github\Data"
+file_path = os.path.join(DATA_DIR, "data.csv")
+output_dir = DATA_DIR
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

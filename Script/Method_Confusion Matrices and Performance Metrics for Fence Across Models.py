@@ -1,3 +1,9 @@
+import os
+
+# Data/ sits next to Script/; resolving from this file keeps the repository
+# runnable wherever it is cloned.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data")
+
 import pandas as pd
 
 def calculate_confusion_matrix(real, pred):
@@ -16,8 +22,8 @@ def calculate_metrics(TP, FP, FN, TN):
     return accuracy, precision, recall, f1
 
 def main():
-    input_file = r"C:\github\Data\Test_model.xlsx"
-    output_file = r"C:\github\Data\Result_Confusion_Matrix.csv"
+    input_file = os.path.join(DATA_DIR, "Test_model.xlsx")
+    output_file = os.path.join(DATA_DIR, "Result_Confusion_Matrix.csv")
 
     df = pd.read_excel(input_file)
 
