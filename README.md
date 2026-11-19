@@ -1,4 +1,4 @@
-Mapping urban enclosed spaces reveals hidden social inequities in four global cities
+Mapping urban enclosed spaces reveals potential social inequities in four global cities
 ===
 Shujuan Tang, Mingxing Chen, Ya Ping Wang, Longwu Liang, Huiping Jiang, Yuwen Sui, Zilu Chen\
 This repository contains the data and scripts for the paper《Mapping urban enclosed spaces reveals hidden social inequities in four global cities》.The authors are Shujuan Tang, Mingxing Chen, Ya Ping Wang, Longwu Liang, Huiping Jiang, Yuwen Sui, Zilu Chen
